@@ -1,24 +1,42 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
+import { API_QUIZZES_URL } from "../config";
+import { Link } from "react-router-dom";
+import type { QuizListItem } from "../types/types";
 
 function Home() {
+  const [quizzes, setQuizzes] = useState<QuizListItem[]>([]);
+
   useEffect(() => {
-    talkToServer();
+    const fetchQuizzes = async () => {
+      try {
+        const response = await axios.get<{ quizzes: QuizListItem[] }>(
+          `${API_QUIZZES_URL}`
+        );
+        setQuizzes(response.data.quizzes || []);
+      } catch (error) {
+        console.error("Error fetching quizzes:", error);
+      }
+    };
+    fetchQuizzes();
   }, []);
 
-  const talkToServer = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/hello`);
-      console.log("Response from server:", response.data);
-    } catch (error) {
-      console.error("Error talking to server:", error);
-    }
-  };
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
-      <p>This is the main page of our application.</p>
+      <h2>Available Quizzes:</h2>
+      <ul>
+        {quizzes.map((quiz) => (
+          <li key={quiz.name}>
+            <Link
+              to={`/quiz/${quiz.name}`}
+              style={{ textDecoration: "none", color: "blue" }}
+            >
+              {quiz.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

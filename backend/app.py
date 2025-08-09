@@ -1,10 +1,12 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
-import os
-import routes
+from quiz_routes import routes_bp
 
 app = Flask(__name__, static_folder="static", static_url_path="")
-CORS(app)
+
+app.register_blueprint(routes_bp)
+
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 
 
 @app.route("/")
@@ -18,4 +20,4 @@ def hello():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5001)
