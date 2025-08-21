@@ -21,7 +21,7 @@ def upload_quiz():
     else:
         return jsonify({"error": "Invalid file format"}), 400
 
-    return jsonify({"status": "success"})
+    return jsonify({"success": True}), 200
 
 
 @routes_bp.route("/quizzes", methods=["GET"])

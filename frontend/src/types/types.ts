@@ -19,3 +19,8 @@ export interface ResultsState {
   questions: QuizQuestion[];
   answers: number[];
 }
+
+export interface BackendResponse {
+  success?: boolean;
+  error?: string;
+}
