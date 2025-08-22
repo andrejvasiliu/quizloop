@@ -3,6 +3,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_QUIZ_URL } from "../config";
 import type { Quiz } from "../types/types";
+import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@radix-ui/react-label";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
 
 function QuizPage() {
   const { name } = useParams<{ name: string }>();
@@ -53,31 +64,41 @@ function QuizPage() {
 
   return (
     <div>
-      <h1>{quiz.title}</h1>
-      <h2>
-        Question {currentQuestionIndex + 1} of {quiz.questions.length}
-      </h2>
-      <p>{currentQuestion.question}</p>
-      <ul>
-        {currentQuestion.options.map((opt, i) => (
-          <li key={i}>
-            <label style={{ cursor: "pointer" }}>
-              <input
-                type="radio"
-                name="option"
-                checked={selectedOption === i}
-                onChange={() => setSelectedOption(i)}
-              />
-              {opt}
-            </label>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleConfirm} disabled={selectedOption === null}>
-        {currentQuestionIndex + 1 === quiz.questions.length
-          ? "Finish Quiz"
-          : "Next Question"}
-      </button>
+      <Label>{quiz.title}</Label>
+      <Card>
+        <CardHeader>
+          <CardTitle>{currentQuestion.question}</CardTitle>
+          <CardDescription>
+            Question {currentQuestionIndex + 1} of {quiz.questions.length}
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent>
+          <RadioGroup
+            value={selectedOption?.toString() || ""}
+            onValueChange={(val) => setSelectedOption(Number(val))}
+          >
+            {currentQuestion.options.map((opt, i) => (
+              <div key={i}>
+                <RadioGroupItem value={i.toString()} id={`option-${i}`} />
+                <Label htmlFor={`option-${i}`}>{opt}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+        </CardContent>
+
+        <CardFooter>
+          <Button
+            onClick={handleConfirm}
+            disabled={selectedOption === null}
+            variant="default"
+          >
+            {currentQuestionIndex + 1 === quiz.questions.length
+              ? "Finish Quiz"
+              : "Next Question"}
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

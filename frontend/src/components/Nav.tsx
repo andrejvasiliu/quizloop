@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import "../styles/nav.css";
+import { Button } from "@/components/ui/button";
 
 function Nav() {
   return (
-    <nav className="navbar">
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
+    <nav className="flex items-center justify-between p-4 shadow-md">
+      <div className="text-xl font-bold">
+        <Link to="/">quizloop</Link>
+      </div>
+      <div className="hidden md:flex gap-4">
+        <Button asChild variant="ghost">
           <Link to="/upload">Upload</Link>
-        </li>
-      </ul>
+        </Button>
+      </div>
     </nav>
   );
 }
