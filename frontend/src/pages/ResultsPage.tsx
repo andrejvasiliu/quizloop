@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import type { ResultsState } from "../types/types";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 function ResultsPage() {
   const location = useLocation();
@@ -22,28 +24,28 @@ function ResultsPage() {
       <p>
         You scored {score} out of {questions.length}
       </p>
-
       <h2>Review</h2>
-      <ol>
-        {questions.map((q, i) => {
-          const correctIndex = q.answer_index;
-          const userIndex = answers[i];
+      <div>
+        {questions.map((question, index) => {
+          const correctIndex = question.answer_index;
+          const userIndex = answers[index];
           return (
-            <li key={i}>
-              <p>{q.question}</p>
-              <p>
-                Your answer: {q.options[userIndex]}{" "}
+            <Card>
+              <CardHeader>
+                <CardTitle>{question.question}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                Your answer: {question.options[userIndex]}{" "}
                 {userIndex === correctIndex ? "✅" : "❌"}
-              </p>
-              {userIndex !== correctIndex && (
-                <p>Correct answer: {q.options[correctIndex]}</p>
-              )}
-            </li>
+                {userIndex !== correctIndex && (
+                  <p>Correct answer: {question.options[correctIndex]}</p>
+                )}
+              </CardContent>
+            </Card>
           );
         })}
-      </ol>
-
-      <button onClick={() => navigate("/")}>Back to Home</button>
+      </div>
+      <Button onClick={() => navigate("/")}>Back to Home</Button>
     </div>
   );
 }

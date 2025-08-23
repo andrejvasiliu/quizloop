@@ -3,6 +3,8 @@ import axios from "axios";
 import { API_QUIZZES_URL } from "../config";
 import { Link } from "react-router-dom";
 import type { QuizListItem } from "../types/types";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 function Home() {
   const [quizzes, setQuizzes] = useState<QuizListItem[]>([]);
@@ -25,18 +27,21 @@ function Home() {
     <div>
       <h1>Welcome to the Home Page</h1>
       <h2>Available Quizzes:</h2>
-      <ul>
+
+      <div>
         {quizzes.map((quiz) => (
-          <li key={quiz.name}>
-            <Link
-              to={`/quiz/${quiz.name}`}
-              style={{ textDecoration: "none", color: "blue" }}
-            >
-              {quiz.title}
-            </Link>
-          </li>
+          <Card key={quiz.name}>
+            <CardHeader>
+              <CardTitle>{quiz.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Button asChild>
+                <Link to={`/quiz/${quiz.name}`}>Start Quiz</Link>
+              </Button>
+            </CardContent>
+          </Card>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
