@@ -2,10 +2,10 @@ from flask import Blueprint, request, jsonify
 import os
 import json
 
-routes_bp = Blueprint("routes", __name__)
+quiz_routes_bp = Blueprint("quiz_routes", __name__)
 
 
-@routes_bp.route("/upload", methods=["POST"])
+@quiz_routes_bp.route("/upload", methods=["POST"])
 def upload_quiz():
     if "quiz_json" not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
@@ -24,7 +24,7 @@ def upload_quiz():
     return jsonify({"success": True}), 200
 
 
-@routes_bp.route("/quizzes", methods=["GET"])
+@quiz_routes_bp.route("/quizzes", methods=["GET"])
 def list_quizzes():
     try:
         quizzes = [f for f in os.listdir("quizzes") if f.endswith(".json")]
@@ -44,7 +44,7 @@ def list_quizzes():
         return jsonify({"error": str(e)}), 500
 
 
-@routes_bp.route("/quiz/<quiz_name>", methods=["POST"])
+@quiz_routes_bp.route("/quiz/<quiz_name>", methods=["POST"])
 def start_quiz(quiz_name):
     try:
         filepath = os.path.join("quizzes", quiz_name + ".json")
@@ -59,4 +59,4 @@ def start_quiz(quiz_name):
         return jsonify({"error": str(e)}), 500
 
 
-# @routes_bp.route("/submit/<quiz_name>", methods=["POST"])
+# @quiz_routes_bp.route("/submit/<quiz_name>", methods=["POST"])
