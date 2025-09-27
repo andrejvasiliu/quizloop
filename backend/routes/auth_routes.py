@@ -31,3 +31,20 @@ def register():
 
     finally:
         session.close()
+
+@auth_routes_bp.route("/login", methods=["POST"])
+def login():
+    data = request.json
+    username, password = data.get("username"), data.get("password")
+    session = SessionLocal()
+
+    try:
+        user = session.query(User).filter(User.username == username).first()
+
+        if not user or not user.check_password(password):
+            return {"error": "Invalid username or password"}, 401
+
+        return {"message": "Login successful"}, 200
+
+    finally:
+        session.close()

@@ -5,7 +5,7 @@ import { API_QUIZ_URL } from "../config";
 import type { Quiz } from "../types/types";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@radix-ui/react-label";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardHeader,
