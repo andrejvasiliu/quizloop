@@ -4,7 +4,7 @@ import {
   API_LOGIN_URL,
   API_REGISTER_URL,
   API_ME_URL,
-  //   API_LOGOUT_URL,
+  API_LOGOUT_URL,
 } from "../config";
 import type {
   AuthContextType,
@@ -75,9 +75,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = () => {
-    setToken(null);
-    setUser(null);
-    setError(null);
+    try {
+      if (!token) {
+        throw new Error("No token available");
+      }
+
+      axios.post<{ message: String }>(
+        API_LOGOUT_URL,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      setToken(null);
+      setUser(null);
+      setError(null);
+    } catch (err: any) {
+      setError(err.response?.data?.error || "Logout failed");
+    }
   };
 
   const clearError = () => setError(null);

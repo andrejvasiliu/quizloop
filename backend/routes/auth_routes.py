@@ -19,6 +19,7 @@ def token_required(f):
         try:
             payload = jwt.decode(token, secret, algorithms=["HS256"])
             g.current_user_id = payload["sub"]
+            g.current_username = payload["username"]
         except jwt.ExpiredSignatureError:
             return {"error": "Token expired"}, 401
         except jwt.InvalidTokenError:
@@ -77,7 +78,7 @@ def login():
         exp_hours = current_app.config["JWT_EXP_HOURS"]
 
         payload = {
-            "sub": user.id,
+            "sub": str(user.id),
             "username": user.username,
             "exp": datetime.utcnow() + timedelta(hours=exp_hours),
             "iat": datetime.utcnow(),
@@ -98,4 +99,10 @@ def login():
 @auth_routes_bp.route("/me", methods=["GET"])
 @token_required
 def profile():
-    return {"username": g.current_user_id, "message": "Profile accessed"}, 200
+    return {"username": g.current_username, "message": "Profile accessed"}, 200
+
+
+@auth_routes_bp.route("/logout", methods=["POST"])
+@token_required
+def logout():
+    return {"message": "Logout successful"}, 200
