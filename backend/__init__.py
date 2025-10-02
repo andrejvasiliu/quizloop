@@ -4,8 +4,12 @@ from db.db import Base, engine
 from routes.quiz_routes import quiz_routes_bp
 from routes.auth_routes import auth_routes_bp
 
+
 def create_app():
     app = Flask(__name__)
+
+    app.config["JWT_SECRET_KEY"] = "super_secret"
+    app.config["JWT_EXP_HOURS"] = 1
 
     Base.metadata.create_all(bind=engine)
 

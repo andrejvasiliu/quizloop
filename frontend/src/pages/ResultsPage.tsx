@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import type { ResultsState } from "../types/types";
+import type { ResultsState } from "../types/quiz_types";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 

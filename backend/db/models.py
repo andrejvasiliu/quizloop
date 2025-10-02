@@ -6,8 +6,9 @@ from argon2.exceptions import VerifyMismatchError
 
 ph = PasswordHasher()
 
+
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True, nullable=False)
