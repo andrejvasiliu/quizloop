@@ -1,13 +1,13 @@
 export interface AuthContextType {
   token: string | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<Boolean>;
   register: (
     username: string,
     email: string,
     password: string
-  ) => Promise<void>;
-  me: () => Promise<void>;
-  logout: () => void;
+  ) => Promise<Boolean>;
+  me: () => Promise<Boolean>;
+  logout: () => Boolean;
   user: string | null;
   error: string | null;
   clearError: () => void;

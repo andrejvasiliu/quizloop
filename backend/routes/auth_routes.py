@@ -27,7 +27,7 @@ def token_required(f):
 
         return f(*args, **kwargs)
 
-    wrapper.__name__ = f.__name__  # keep function name
+    wrapper.__name__ = f.__name__
     return wrapper
 
 
@@ -57,7 +57,23 @@ def register():
         session.add(user)
         session.commit()
 
-        return {"username": username, "message": "User registered successfully"}, 201
+        secret = current_app.config["JWT_SECRET_KEY"]
+        exp_hours = current_app.config["JWT_EXP_HOURS"]
+
+        payload = {
+            "sub": str(user.id),
+            "username": user.username,
+            "exp": datetime.utcnow() + timedelta(hours=exp_hours),
+            "iat": datetime.utcnow(),
+        }
+
+        token = jwt.encode(payload, secret, algorithm="HS256")
+
+        return {
+            "access_token": token,
+            "username": username,
+            "message": "User registered successfully",
+        }, 201
 
     finally:
         session.close()

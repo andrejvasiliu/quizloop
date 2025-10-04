@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 
 function Nav() {
   const { token, login, logout, error, clearError } = useAuth();
+  const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,6 +26,7 @@ function Nav() {
       await login(username, password);
       setUsername("");
       setPassword("");
+      setOpen(false);
     } catch (err: any) {
       console.error("Login error1:", err.response?.data || err.message);
     }
@@ -38,7 +40,13 @@ function Nav() {
 
       <div className="hidden md:flex gap-4">
         {!token ? (
-          <Dialog onOpenChange={(open) => !open && clearError()}>
+          <Dialog
+            open={open}
+            onOpenChange={(o) => {
+              setOpen(o);
+              if (!o) clearError();
+            }}
+          >
             <DialogTrigger asChild>
               <Button variant="ghost">Log In</Button>
             </DialogTrigger>
@@ -79,11 +87,11 @@ function Nav() {
                   {error && <p className="text-sm text-red-500">{error}</p>}
                 </div>
                 <div className="flex flex-col items-center space-y-4">
-                  <Button asChild variant="link">
-                    <Link to="#">Forgot password?</Link>
+                  <Button asChild variant="link" onClick={() => setOpen(false)}>
+                    <Link to="/forgot-password">Forgot password?</Link>
                   </Button>
-                  <Button variant="link">
-                    <Link to="#">Sign Up</Link>
+                  <Button asChild variant="link" onClick={() => setOpen(false)}>
+                    <Link to="/register">Sign Up</Link>
                   </Button>
                 </div>
                 <DialogFooter>

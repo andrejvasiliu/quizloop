@@ -30,8 +30,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(res.data.access_token);
       setUser(res.data.username);
       setError(null);
+
+      return true;
     } catch (err: any) {
       setError(err.response?.data?.error || "Login failed");
+
+      return false;
     }
   };
 
@@ -49,8 +53,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(res.data.access_token);
       setUser(res.data.username);
       setError(null);
+
+      return true;
     } catch (err: any) {
       setError(err.response?.data?.error || "Registration failed");
+
+      return false;
     }
   };
 
@@ -69,8 +77,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       setUser(res.data.username);
       setError(null);
+
+      return true;
     } catch (err: any) {
       setError(err.response?.data?.error || "Failed to fetch user");
+
+      return false;
     }
   };
 
@@ -94,8 +106,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(null);
       setUser(null);
       setError(null);
+
+      return true;
     } catch (err: any) {
       setError(err.response?.data?.error || "Logout failed");
+
+      return false;
     }
   };
 
