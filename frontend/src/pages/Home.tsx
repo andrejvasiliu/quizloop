@@ -24,7 +24,7 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <>
       <h1>Welcome to the Home Page</h1>
       <h2>Available Quizzes:</h2>
 
@@ -42,7 +42,7 @@ function Home() {
           </Card>
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

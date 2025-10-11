@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import {
   Card,
@@ -13,7 +13,7 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 
 function Register() {
-  const { register, error, clearError } = useAuth();
+  const { token, register, error, clearError } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,65 +35,69 @@ function Register() {
   };
 
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Sign Up to Quizloop</CardTitle>
-        </CardHeader>
-        <form onSubmit={handleRegister} className="grid gap-4">
-          <CardContent>
-            <div>
+    <>
+      {!token ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Sign Up to Quizloop</CardTitle>
+          </CardHeader>
+          <form onSubmit={handleRegister} className="grid gap-4">
+            <CardContent>
               <div>
-                <Label>Username</Label>
-                <Input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="Pick a username"
-                  value={username}
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                    clearError();
-                  }}
-                />
+                <div>
+                  <Label>Username</Label>
+                  <Input
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="Pick a username"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                      clearError();
+                    }}
+                  />
+                </div>
+                <div>
+                  <Label>Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Your email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      clearError();
+                    }}
+                  />
+                </div>
+                <div>
+                  <Label>Password</Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Pick a password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      clearError();
+                    }}
+                  />
+                </div>
               </div>
-              <div>
-                <Label>Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Your email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    clearError();
-                  }}
-                />
-              </div>
-              <div>
-                <Label>Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Pick a password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    clearError();
-                  }}
-                />
-              </div>
-            </div>
-            {error && <p className="text-sm text-red-500">{error}</p>}
-          </CardContent>
-          <CardFooter>
-            <Button type="submit">Sign Up</Button>
-          </CardFooter>
-        </form>
-      </Card>
-    </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+            </CardContent>
+            <CardFooter>
+              <Button type="submit">Sign Up</Button>
+            </CardFooter>
+          </form>
+        </Card>
+      ) : (
+        <Navigate to="/" />
+      )}
+    </>
   );
 }
 

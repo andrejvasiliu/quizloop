@@ -63,7 +63,7 @@ function QuizPage() {
   };
 
   return (
-    <div>
+    <>
       <Label>{quiz.title}</Label>
       <Card>
         <CardHeader>
@@ -99,7 +99,7 @@ function QuizPage() {
           </Button>
         </CardFooter>
       </Card>
-    </div>
+    </>
   );
 }
 

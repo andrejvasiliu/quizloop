@@ -11,6 +11,9 @@ export interface AuthContextType {
   user: string | null;
   error: string | null;
   clearError: () => void;
+  showAuthModal: boolean;
+  toggleShowAuthModal: () => void;
+  requireAuth: () => void;
 }
 
 export interface AuthResponse {

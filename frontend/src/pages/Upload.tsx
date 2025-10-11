@@ -56,7 +56,7 @@ function Upload() {
   };
 
   return (
-    <div>
+    <>
       <Card>
         <CardHeader>
           <CardTitle>Upload a Quiz</CardTitle>
@@ -85,7 +85,7 @@ function Upload() {
           </Button>
         </CardFooter>
       </Card>
-    </div>
+    </>
   );
 }
 

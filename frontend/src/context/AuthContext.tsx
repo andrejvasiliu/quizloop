@@ -18,6 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
 
   const login = async (username: string, password: string) => {
     try {
@@ -117,9 +118,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const clearError = () => setError(null);
 
+  const toggleShowAuthModal = () => setShowAuthModal(!showAuthModal);
+
+  const requireAuth = () => {
+    setShowAuthModal(true);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ token, login, register, me, logout, user, error, clearError }}
+      value={{
+        token,
+        login,
+        register,
+        me,
+        logout,
+        user,
+        error,
+        clearError,
+        showAuthModal,
+        toggleShowAuthModal,
+        requireAuth,
+      }}
     >
       {children}
     </AuthContext.Provider>

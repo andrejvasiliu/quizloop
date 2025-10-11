@@ -19,7 +19,7 @@ function ResultsPage() {
   }, 0);
 
   return (
-    <div>
+    <>
       <h1>{quizTitle} – Results</h1>
       <p>
         You scored {score} out of {questions.length}
@@ -46,7 +46,7 @@ function ResultsPage() {
         })}
       </div>
       <Button onClick={() => navigate("/")}>Back to Home</Button>
-    </div>
+    </>
   );
 }
 
