@@ -11,6 +11,7 @@ import type {
   AuthResponse,
   AuthMeResponse,
 } from "@/types/auth_types";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -19,6 +20,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [redirectPath, setRedirectPath] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const login = async (username: string, password: string) => {
     try {
@@ -107,12 +111,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(null);
       setUser(null);
       setError(null);
-
-      return true;
+      navigate("/");
     } catch (err: any) {
       setError(err.response?.data?.error || "Logout failed");
-
-      return false;
     }
   };
 
@@ -120,9 +121,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const toggleShowAuthModal = () => setShowAuthModal(!showAuthModal);
 
-  const requireAuth = () => {
+  const requireAuth = (redirectTo?: string) => {
+    if (redirectTo) setRedirectPath(redirectTo);
     setShowAuthModal(true);
   };
+
+  const clearRedirect = () => setRedirectPath(null);
 
   return (
     <AuthContext.Provider
@@ -138,6 +142,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         showAuthModal,
         toggleShowAuthModal,
         requireAuth,
+        redirectPath,
+        clearRedirect,
       }}
     >
       {children}

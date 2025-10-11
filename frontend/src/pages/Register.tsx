@@ -43,49 +43,43 @@ function Register() {
           </CardHeader>
           <form onSubmit={handleRegister} className="grid gap-4">
             <CardContent>
-              <div>
-                <div>
-                  <Label>Username</Label>
-                  <Input
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder="Pick a username"
-                    value={username}
-                    onChange={(e) => {
-                      setUsername(e.target.value);
-                      clearError();
-                    }}
-                  />
-                </div>
-                <div>
-                  <Label>Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      clearError();
-                    }}
-                  />
-                </div>
-                <div>
-                  <Label>Password</Label>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Pick a password"
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      clearError();
-                    }}
-                  />
-                </div>
+              <div className="grid gap-1.5">
+                <Label>Username</Label>
+                <Input
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="Pick a username"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    clearError();
+                  }}
+                />
+                <Label>Email</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    clearError();
+                  }}
+                />
+                <Label>Password</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Pick a password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    clearError();
+                  }}
+                />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
             </CardContent>

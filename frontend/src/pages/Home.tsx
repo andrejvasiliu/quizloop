@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_QUIZZES_URL } from "../config";
-import { Link } from "react-router-dom";
 import type { QuizListItem } from "../types/quiz_types";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { GuardedLink } from "@/components/GuardedLink";
 
 function Home() {
   const [quizzes, setQuizzes] = useState<QuizListItem[]>([]);
@@ -36,7 +36,9 @@ function Home() {
             </CardHeader>
             <CardContent>
               <Button asChild>
-                <Link to={`/quiz/${quiz.name}`}>Start Quiz</Link>
+                <GuardedLink to={`/quiz/${quiz.name}`} requireLogin>
+                  Start Quiz
+                </GuardedLink>
               </Button>
             </CardContent>
           </Card>

@@ -7,13 +7,15 @@ export interface AuthContextType {
     password: string
   ) => Promise<Boolean>;
   me: () => Promise<Boolean>;
-  logout: () => Boolean;
+  logout: () => void;
   user: string | null;
   error: string | null;
   clearError: () => void;
   showAuthModal: boolean;
   toggleShowAuthModal: () => void;
-  requireAuth: () => void;
+  requireAuth: (redirectTo?: string) => void;
+  redirectPath: string | null;
+  clearRedirect: () => void;
 }
 
 export interface AuthResponse {

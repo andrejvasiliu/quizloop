@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
-import AuthModal from "./AuthModal";
 
 function Nav() {
-  const { token, logout } = useAuth();
+  const { token, logout, requireAuth } = useAuth();
 
   return (
     <>
@@ -15,7 +14,9 @@ function Nav() {
 
         <div className="hidden md:flex gap-4">
           {!token ? (
-            <AuthModal />
+            <Button variant="ghost" onClick={() => requireAuth()}>
+              Log In
+            </Button>
           ) : (
             <div>
               <Button asChild variant="ghost">
