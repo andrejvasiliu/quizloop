@@ -13,8 +13,10 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/context/AuthContext";
 
 function Upload() {
+  const { token } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [uploaded, setUploaded] = useState(false);
@@ -38,11 +40,17 @@ function Upload() {
 
     try {
       const response = await axios.post<BackendResponse>(
-        `${API_UPLOAD_URL}`,
-        formData
+        API_UPLOAD_URL,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
       );
 
-      if (response.data.success === true) {
+      if (response.data.success) {
         setUploaded(true);
         setStatus("✅ File uploaded successfully!");
       } else {
@@ -51,7 +59,7 @@ function Upload() {
         );
       }
     } catch (error: any) {
-      setStatus(`❌ An error occurred: ${error}`);
+      setStatus(`❌ An error occurred: ${error.response?.data?.error || error}`);
     }
   };
 

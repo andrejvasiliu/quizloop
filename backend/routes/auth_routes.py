@@ -1,35 +1,11 @@
-import jwt
-from datetime import datetime, timedelta
 from flask import Blueprint, request, current_app, g
 from db.db import SessionLocal
 from db.models import User
+import jwt
+from datetime import datetime, timedelta
+from utils.auth import token_required
 
 auth_routes_bp = Blueprint("auth_routes", __name__)
-
-
-def token_required(f):
-    def wrapper(*args, **kwargs):
-        auth_header = request.headers.get("Authorization")
-        if not auth_header or not auth_header.startswith("Bearer "):
-            return {"error": "Missing or invalid token"}, 401
-
-        token = auth_header.split(" ")[1]
-        secret = current_app.config["JWT_SECRET_KEY"]
-
-        try:
-            payload = jwt.decode(token, secret, algorithms=["HS256"])
-            g.current_user_id = payload["sub"]
-            g.current_username = payload["username"]
-        except jwt.ExpiredSignatureError:
-            return {"error": "Token expired"}, 401
-        except jwt.InvalidTokenError:
-            return {"error": "Invalid token"}, 401
-
-        return f(*args, **kwargs)
-
-    wrapper.__name__ = f.__name__
-    return wrapper
-
 
 @auth_routes_bp.route("/register", methods=["POST"])
 def register():

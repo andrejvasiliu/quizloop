@@ -1,17 +1,27 @@
 export interface QuizQuestion {
+  id: number;
   question: string;
-  options: string[];
-  answer_index: number;
+  answers: QuizAnswer[];
 }
 
-export interface Quiz {
-  title: string;
-  questions: QuizQuestion[];
+export interface QuizAnswer {
+  id: number;
+  text: string;
+  is_correct: boolean;
 }
 
 export interface QuizListItem {
+  id: number;
   title: string;
-  name: string; // filename without .json
+  description: string;
+}
+
+export interface Quiz extends QuizListItem {
+  questions: QuizQuestion[];
+}
+
+export interface QuizResponse {
+  quiz: Quiz;
 }
 
 export interface ResultsState {

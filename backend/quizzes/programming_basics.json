@@ -3,12 +3,12 @@
   "questions": [
     {
       "question": "Which language is primarily used for web development?",
-      "options": ["Python", "C++", "HTML", "Java"],
+      "answers": ["Python", "C++", "HTML", "Java"],
       "answer_index": 2
     },
     {
       "question": "What does 'HTTP' stand for?",
-      "options": [
+      "answers": [
         "HyperText Transfer Protocol",
         "HighText Transfer Protocol",
         "HyperText Transmission Process",
@@ -18,17 +18,17 @@
     },
     {
       "question": "Which of the following is a JavaScript framework?",
-      "options": ["Django", "Laravel", "React", "Rails"],
+      "answers": ["Django", "Laravel", "React", "Rails"],
       "answer_index": 2
     },
     {
       "question": "What symbol is used to denote an ID in CSS?",
-      "options": [".", "#", "*", "&"],
+      "answers": [".", "#", "*", "&"],
       "answer_index": 1
     },
     {
       "question": "Which one is NOT a programming paradigm?",
-      "options": [
+      "answers": [
         "Object-oriented",
         "Functional",
         "Procedural",

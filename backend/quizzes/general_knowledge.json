@@ -3,17 +3,17 @@
   "questions": [
     {
       "question": "What is the capital of France?",
-      "options": ["Paris", "Rome", "Madrid", "Berlin"],
+      "answers": ["Paris", "Rome", "Madrid", "Berlin"],
       "answer_index": 0
     },
     {
       "question": "Which planet is known as the Red Planet?",
-      "options": ["Earth", "Mars", "Jupiter", "Venus"],
+      "answers": ["Earth", "Mars", "Jupiter", "Venus"],
       "answer_index": 1
     },
     {
       "question": "Who wrote the play 'Romeo and Juliet'?",
-      "options": [
+      "answers": [
         "Leo Tolstoy",
         "William Shakespeare",
         "Mark Twain",

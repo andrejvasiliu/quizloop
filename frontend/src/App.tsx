@@ -20,7 +20,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/upload" element={<Upload />} />
-            <Route path="/quiz/:name" element={<QuizPage />} />
+            <Route path="/quiz/:quiz_id" element={<QuizPage />} />
             <Route path="/results" element={<ResultsPage />} />
           </Route>
         </Routes>

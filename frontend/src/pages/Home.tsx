@@ -30,13 +30,13 @@ function Home() {
 
       <div>
         {quizzes.map((quiz) => (
-          <Card key={quiz.name}>
+          <Card key={quiz.id}>
             <CardHeader>
               <CardTitle>{quiz.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <Button asChild>
-                <GuardedLink to={`/quiz/${quiz.name}`} requireLogin>
+                <GuardedLink to={`/quiz/${quiz.id}`} requireLogin>
                   Start Quiz
                 </GuardedLink>
               </Button>
