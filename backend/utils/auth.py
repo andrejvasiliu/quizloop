@@ -1,5 +1,7 @@
 from flask import request, current_app, g
 import jwt
+from datetime import datetime, timedelta
+
 
 def token_required(f):
     def wrapper(*args, **kwargs):
@@ -15,6 +17,7 @@ def token_required(f):
             g.current_user_id = int(payload["sub"])
             g.current_username = payload["username"]
         except jwt.ExpiredSignatureError:
+            # raise error instead
             return {"error": "Token expired"}, 401
         except jwt.InvalidTokenError:
             return {"error": "Invalid token"}, 401
@@ -23,3 +26,19 @@ def token_required(f):
 
     wrapper.__name__ = f.__name__
     return wrapper
+
+
+def create_jwt_token(user_id, username):
+    secret = current_app.config["JWT_SECRET_KEY"]
+    exp_hours = current_app.config["JWT_EXP_HOURS"]
+
+    payload = {
+        "sub": str(user_id),
+        "username": username,
+        "exp": datetime.utcnow() + timedelta(hours=exp_hours),
+        "iat": datetime.utcnow(),
+    }
+
+    token = jwt.encode(payload, secret, algorithm="HS256")
+
+    return token

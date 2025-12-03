@@ -21,11 +21,9 @@ def upload_quiz():
     try:
         with get_session() as session:
             upload_quiz_service(session, file, g.current_user_id)
-
+            return jsonify({"success": True}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-    return jsonify({"success": True}), 200
 
 
 @quiz_routes_bp.route("/quizzes", methods=["GET"])
