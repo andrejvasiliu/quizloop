@@ -5,21 +5,28 @@ from repositories.quiz_repository import (
     get_all_quizzes,
     get_quiz_by_id,
 )
+from utils.exceptions import (
+    InvalidFileError,
+    MissingFileFieldError,
+    FieldWrongTypeError,
+)
 
 
 def upload_quiz_service(session, file, user_id):
     try:
         data = json.load(file)
     except Exception:
-        raise ValueError("Invalid JSON file")
+        raise InvalidFileError()
 
     title = data.get("title")
     if not title:
-        raise ValueError("Missing 'title' field")
+        raise MissingFileFieldError("Missing 'title' field in uploaded quiz file")
 
     questions = data.get("questions")
     if not questions or not isinstance(questions, list):
-        raise ValueError("'questions' must be a non-empty list")
+        raise MissingFileFieldError(
+            "'questions' must be a non-empty list in uploaded quiz file"
+        )
 
     description = data.get("description", "No description")
 
@@ -44,6 +51,9 @@ def get_all_quizzes_service(session):
 
 
 def get_quiz_service(session, quiz_id):
+    if not isinstance(quiz_id, int):
+        raise FieldWrongTypeError("Quiz ID must be an integer")
+
     quiz = get_quiz_by_id(session, quiz_id)
 
     quiz_data = {

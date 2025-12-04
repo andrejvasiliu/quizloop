@@ -1,6 +1,12 @@
 from flask import request, current_app, g
 import jwt
 from datetime import datetime, timedelta
+from utils.exceptions import (
+    TokenExpiredError,
+    InvalidTokenError,
+    MissingFieldError,
+    InvalidEmailError,
+)
 
 
 def token_required(f):
@@ -17,10 +23,9 @@ def token_required(f):
             g.current_user_id = int(payload["sub"])
             g.current_username = payload["username"]
         except jwt.ExpiredSignatureError:
-            # raise error instead
-            return {"error": "Token expired"}, 401
+            raise TokenExpiredError()
         except jwt.InvalidTokenError:
-            return {"error": "Invalid token"}, 401
+            raise InvalidTokenError()
 
         return f(*args, **kwargs)
 
@@ -42,3 +47,15 @@ def create_jwt_token(user_id, username):
     token = jwt.encode(payload, secret, algorithm="HS256")
 
     return token
+
+
+def require_field(data, field):
+    value = data.get(field)
+    if not value:
+        raise MissingFieldError(f"{field} is required")
+    return value
+
+
+def validate_email_format(email):
+    if "@" not in email or "." not in email:
+        raise InvalidEmailError()

@@ -24,11 +24,13 @@ function Register() {
 
     try {
       const res = await register(username, email, password);
-      setUsername("");
-      setEmail("");
-      setPassword("");
 
-      if (res) navigate("/");
+      if (res) {
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        navigate("/");
+      }
     } catch (err: any) {
       console.error("Registration error:", err.response?.data || err.message);
     }
