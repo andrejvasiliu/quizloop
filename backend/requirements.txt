@@ -1,0 +1,6 @@
+flask
+flask_cors
+sqlalchemy
+argon2-cffi
+cffi
+pyjwt
