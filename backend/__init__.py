@@ -36,6 +36,6 @@ def create_app():
 
     @app.errorhandler(Exception)
     def handle_uncaught_errors(e):
-        return jsonify({"error": "Internal server error"}), 500
+        return jsonify({"error": str(e)}), 500
 
     return app
