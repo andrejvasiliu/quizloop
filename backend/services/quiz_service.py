@@ -1,11 +1,11 @@
 import json
-from db.models import Quiz, Question, Answer
-from repositories.quiz_repository import (
+from ..db.models import Quiz, Question, Answer
+from ..repositories.quiz_repository import (
     save_quiz,
     get_all_quizzes,
     get_quiz_by_id,
 )
-from utils.exceptions import (
+from ..utils.exceptions import (
     InvalidFileError,
     MissingFileFieldError,
     FieldWrongTypeError,

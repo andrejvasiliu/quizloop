@@ -1,10 +1,10 @@
-from db.models import User
-from repositories.auth_repository import create_user, login_user
-from utils.auth import create_jwt_token, require_field, validate_email_format
-from utils.exceptions import InvalidCredentialsError
+from ..db.models import User
+from ..repositories.auth_repository import create_user, login_user
+from ..utils.auth import create_jwt_token, require_field, validate_email_format
+from ..utils.exceptions import InvalidCredentialsError
 
 
-def register_user_service(session, data):
+def register_user_service(session, data, secret, exp_hours):
     username, email, password = (
         require_field(data, "username"),
         require_field(data, "email"),
@@ -17,7 +17,7 @@ def register_user_service(session, data):
     user.set_password(password)
     user = create_user(session, user)
 
-    token = create_jwt_token(user.id, user.username)
+    token = create_jwt_token(user.id, user.username, secret, exp_hours)
 
     return {
         "access_token": token,
@@ -25,7 +25,7 @@ def register_user_service(session, data):
     }
 
 
-def login_user_service(session, data):
+def login_user_service(session, data, secret, exp_hours):
     username, password = (
         require_field(data, "username"),
         require_field(data, "password"),
@@ -36,7 +36,7 @@ def login_user_service(session, data):
     if not user or not user.check_password(password):
         raise InvalidCredentialsError()
 
-    token = create_jwt_token(user.id, user.username)
+    token = create_jwt_token(user.id, user.username, secret, exp_hours)
 
     return {
         "access_token": token,

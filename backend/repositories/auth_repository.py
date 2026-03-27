@@ -1,6 +1,6 @@
-from db.models import User
+from ..db.models import User
 from sqlalchemy.exc import IntegrityError
-from utils.exceptions import UserAlreadyExistsError
+from ..utils.exceptions import UserAlreadyExistsError
 
 
 def create_user(session, user):

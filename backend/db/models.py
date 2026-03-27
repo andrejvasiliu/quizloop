@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
-from .db import Base
+from .database import Base
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 

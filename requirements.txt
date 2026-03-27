@@ -5,3 +5,5 @@ argon2-cffi
 cffi
 pyjwt
 gunicorn
+python-dotenv
+alembic

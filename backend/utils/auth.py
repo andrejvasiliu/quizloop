@@ -1,7 +1,7 @@
 from flask import request, current_app, g
 import jwt
 from datetime import datetime, timedelta
-from utils.exceptions import (
+from .exceptions import (
     TokenExpiredError,
     InvalidTokenError,
     MissingFieldError,
@@ -33,10 +33,7 @@ def token_required(f):
     return wrapper
 
 
-def create_jwt_token(user_id, username):
-    secret = current_app.config["JWT_SECRET_KEY"]
-    exp_hours = current_app.config["JWT_EXP_HOURS"]
-
+def create_jwt_token(user_id, username, secret, exp_hours):
     payload = {
         "sub": str(user_id),
         "username": username,

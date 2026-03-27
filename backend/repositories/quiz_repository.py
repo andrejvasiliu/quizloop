@@ -1,4 +1,4 @@
-from db.models import Quiz, Question
+from ..db.models import Quiz, Question
 from sqlalchemy.orm import selectinload
 
 

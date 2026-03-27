@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await axios.post<AuthResponse>(
         API_LOGIN_URL,
         { username, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       setToken(res.data.access_token);
@@ -47,13 +47,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (
     username: string,
     email: string,
-    password: string
+    password: string,
   ) => {
     try {
       const res = await axios.post<AuthResponse>(
         API_REGISTER_URL,
         { username, email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setToken(res.data.access_token);
       setUser(res.data.username);
@@ -61,7 +61,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       return true;
     } catch (err: any) {
-      setError(err.response?.data?.error || "Registration failed");
+      setError(
+        err.response?.data?.error ||
+          `Registration failed (${err.response?.status})`,
+      );
 
       return false;
     }
@@ -105,7 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             Authorization: `Bearer ${token}`,
           },
           withCredentials: true,
-        }
+        },
       );
 
       setToken(null);

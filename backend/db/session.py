@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from db.db import SessionLocal
+from .database import SessionLocal
 
 @contextmanager
 def get_session():
