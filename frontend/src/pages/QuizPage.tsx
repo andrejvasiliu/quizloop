@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_QUIZ_URL } from "../config";
+import { API } from "../config";
 import type { Quiz, QuizResponse, ResultsState } from "../types/quiz_types";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -29,7 +29,7 @@ function QuizPage() {
     const fetchQuiz = async () => {
       try {
         const response = await axios.post<QuizResponse>(
-          `${API_QUIZ_URL}/${quiz_id}`,
+          `${API.quiz}/${quiz_id}`,
           {},
           {
             headers: {

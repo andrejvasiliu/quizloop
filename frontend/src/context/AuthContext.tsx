@@ -1,10 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import axios from "axios";
 import {
-  API_LOGIN_URL,
-  API_REGISTER_URL,
-  API_ME_URL,
-  API_LOGOUT_URL,
+  API,
 } from "../config";
 import type {
   AuthContextType,
@@ -27,7 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (username: string, password: string) => {
     try {
       const res = await axios.post<AuthResponse>(
-        API_LOGIN_URL,
+        API.auth.login,
         { username, password },
         { withCredentials: true },
       );
@@ -51,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   ) => {
     try {
       const res = await axios.post<AuthResponse>(
-        API_REGISTER_URL,
+        API.auth.register,
         { username, email, password },
         { withCredentials: true },
       );
@@ -76,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error("No token available");
       }
 
-      const res = await axios.get<AuthMeResponse>(API_ME_URL, {
+      const res = await axios.get<AuthMeResponse>(API.auth.me, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -101,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       axios.post<{ message: String }>(
-        API_LOGOUT_URL,
+        API.auth.logout,
         {},
         {
           headers: {

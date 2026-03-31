@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_QUIZZES_URL } from "../config";
+import { API } from "../config";
 import type { QuizListItem } from "../types/quiz_types";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ function Home() {
     const fetchQuizzes = async () => {
       try {
         const response = await axios.get<{ quizzes: QuizListItem[] }>(
-          `${API_QUIZZES_URL}`
+          `${API.quizzes}`
         );
         setQuizzes(response.data.quizzes || []);
       } catch (error) {

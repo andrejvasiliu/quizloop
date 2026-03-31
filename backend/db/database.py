@@ -1,13 +1,9 @@
 from sqlalchemy import create_engine, event
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from pathlib import Path
 import os
 
-BASE_DIR = Path(__file__).resolve().parents[1]
-DB_PATH = BASE_DIR / os.getenv("DATABASE_FILENAME")
-
-SQLALCHEMY_DATABASE_URI = f"sqlite:///{DB_PATH}"
+SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI")
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URI,

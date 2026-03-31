@@ -5,7 +5,6 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from pathlib import Path
 import os
 from dotenv import load_dotenv
 
@@ -14,11 +13,8 @@ from dotenv import load_dotenv
 # access to the values within the .ini file in use.
 config = context.config
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-load_dotenv(BASE_DIR.parent / ".env")
-DB_PATH = BASE_DIR / os.getenv("DATABASE_FILENAME")
-
-database_url = f"sqlite:///{DB_PATH}"
+load_dotenv()
+database_url = os.getenv("DATABASE_URI")
 
 if not database_url:
     raise RuntimeError("DATABASE_URL not set")

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { API_UPLOAD_URL } from "../config";
+import { API } from "../config";
 import type { BackendResponse } from "../types/quiz_types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,7 +40,7 @@ function Upload() {
 
     try {
       const response = await axios.post<BackendResponse>(
-        API_UPLOAD_URL,
+        API.upload,
         formData,
         {
           headers: {
