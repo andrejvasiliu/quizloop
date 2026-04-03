@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from .config import DevelopmentConfig, TestingConfig, ProductionConfig
 from .routes.quiz_routes import quiz_routes_v1_bp
@@ -25,6 +25,10 @@ def create_app():
         supports_credentials=True,
         origins=os.getenv("CORS_ORIGINS", "").split(","),
     )
+
+    @app.route("/health", methods=["GET"])
+    def health_check():
+        return jsonify({"status": "healthy"}), 200
 
     app.register_blueprint(auth_routes_v1_bp, url_prefix="/api")
     app.register_blueprint(quiz_routes_v1_bp, url_prefix="/api")
