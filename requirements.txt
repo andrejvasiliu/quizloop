@@ -7,3 +7,4 @@ pyjwt
 gunicorn
 python-dotenv
 alembic
+pytest
