@@ -1,9 +1,9 @@
 from contextlib import contextmanager
-from .database import SessionLocal
+from . import database
 
 @contextmanager
 def get_session():
-    session = SessionLocal()
+    session = database.SessionLocal()
     try:
         yield session
         session.commit()

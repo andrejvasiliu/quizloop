@@ -1,7 +1,3 @@
-def test_app_starts(app):
-    assert app is not None
-
-
-def test_example(client):
+def test_get_quizzes_returns_200(client, db_session):
     response = client.get("/api/quizzes")
     assert response.status_code == 200

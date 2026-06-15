@@ -1,6 +1,6 @@
 from flask import request, current_app, g
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from .exceptions import (
     TokenExpiredError,
     InvalidTokenError,
@@ -37,8 +37,8 @@ def create_jwt_token(user_id, username, secret, exp_hours):
     payload = {
         "sub": str(user_id),
         "username": username,
-        "exp": datetime.utcnow() + timedelta(hours=exp_hours),
-        "iat": datetime.utcnow(),
+        "exp": datetime.now(UTC) + timedelta(hours=exp_hours),
+        "iat": datetime.now(UTC),
     }
 
     token = jwt.encode(payload, secret, algorithm="HS256")

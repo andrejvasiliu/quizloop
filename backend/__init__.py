@@ -36,18 +36,19 @@ def create_app():
     # Global error handlers
     @app.errorhandler(JWTError)
     def handle_jwt_errors(e):
-        return error_response(str(e), 401)
+        return error_response(str(e), e.status_code)
 
     @app.errorhandler(ServiceError)
     def handle_service_errors(e):
-        return error_response(str(e), 400)
+        return error_response(str(e), e.status_code)
 
     @app.errorhandler(RepositoryError)
     def handle_repository_errors(e):
+        status_code = e.status_code
         if env == "production":
-            return error_response("Database error", 400)
+            return error_response("Database error", status_code)
         else:
-            return error_response(str(e), 400)
+            return error_response(str(e), status_code)
 
     @app.errorhandler(Exception)
     def handle_uncaught_errors(e):

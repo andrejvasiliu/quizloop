@@ -14,7 +14,7 @@ class DevelopmentConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
-    JWT_SECRET_KEY = "test-secret"
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "test-secret")
 
 
 class ProductionConfig(BaseConfig):
